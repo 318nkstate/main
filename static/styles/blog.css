@@ -1,0 +1,45 @@
+body{
+    font-size: larger;
+    word-wrap: normal;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+hr{
+    width: auto;
+}
+.m-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+.m-main__content,
+.m-main__posts{
+    min-width:50vw;
+
+    max-width: 100%;
+}
+
+.m-main__content{
+    width: 50vw;
+}
+
+.m-main__posts *{
+    margin: 0;
+    padding: 0;
+}
+.m-main__posts li{
+    margin: 0;
+    list-style: none;
+}
+
+
+@media (max-width: 800px) {
+    .m-main__posts,
+    .m-main__content {
+        width: auto;
+        padding: 0 2vw;
+    }
+}
