@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-us">
+   
+    <head>
+    <title>The 318nkstate blog ~ Elixir's Functions Are Pretty Cool</title>
+    <meta description="There's definitely something great in the cool Kool-Aid">
+    <meta charset="utf-8"">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles/blog.css" type="text/css">
+</head>
+ 
+<body>
+    
+    <header class="m-header">
+    <div>
+    The 318nkstate blog
+    </div>
+    <nav>
+    <a href="/pages/blog">Post</a>
+</nav> 
+</header>
+<hr>
+<main itemscope typeof="https://schema.org/blog" class="m-main__content">
+    <h1>Elixir's Function Are Pretty Cool</h1>
+    <p>posted: 2021-08-22</p>
+    <p>Imagine you need to split a string into a list from a phoenix form</p>
+    <code class="code">
+        <pre>def string_to_list(attrs) do</pre>
+        <pre>  attrs</pre>
+        <pre>  |> Map.update!(:atom_of_string_that_needs_to_be_a_list, fn string -> </pre>
+        <pre>    string</pre>
+        <pre>    |> String.split(",", trim: true)</pre>
+        <pre>    |> Enum.map( &(&1 |> String.trim() ) )</pre>
+        <pre>    |> Enum.uniq()</pre>
+        <pre>    end )</pre>
+        <pre>end</pre>
+    </code>
+    <p>But what does it mean? Let's break it down to something less legible.</p>
+    <code class="code">
+        <pre>def string_to_list(attrs) do (</pre>
+        <pre>  Map.update!(attrs, :atom_of_string_that_needs_to_be_a_list, </pre>
+        <pre>    fn(string -> Enum.uniq( </pre> 
+        <pre>       Enum.map( </pre>
+        <pre>         String.trim( String.split( string, ",", trim: true) ) )</pre>
+        <pre>       )</pre>
+        <pre>   end)</pre>
+        <pre>) end</pre>
+    </code>
+    <p>Let's start with the missing <code>|></code> the pipe operator. You can think of the pipe operator that acts like a conveyor belt and each individual function acts like a machine that is apart of an assembly line.</p>
+    <p>As you can see it makes code pretty damn clean.</p>
+    <p>The <code>string</code> arg pipes into String.split/3 function which turns a string into a list. Then the new value and pipes into Enum.map/2 string which runs the anynomous function <code>&(&1 |> String.trim())</code></p>
+    <p>Think of <code>&(&1, &2, &3)</code> like an f(x, y, z) in algebra. <code>&()</code> is the function everything inside is an argument.</p>
+    <p>So if you guessed it the Enum.map/2 function is going to map over each arg <code>&1</code> by piping it into <code>String.trim/1</code> which will remove the leading and trailing white space in a string.</p>
+    <p>But, but, but why isn't <code>string</code> written into each function by hand?</p>
+    <p>Glad you didn't ask. You might have noticed there might be only two args in a function with an arity of one. Or how there's only one arg for a function with an arity of 2 or even no args at all with an arity of one. Because you guessed it the value that is getting piped ;) is the first arg of any function down the chain.</p>
+    <p>Pretty cool right?</p>
+    <p>It makes code alot easier to read and understand</p>
+    <p>But what about the <code>fn string -> string |> ... end</code> why not keep using <code>&(&1, &2, ...)</code>? Good question, in my humble opinion it comes to a matter of code readability. Imagine having to deal with this:</p>
+    <code>
+       <pre>trim_string = fn tag -> %{tag: tag |> String.trim()} end</pre>
+    </code>
+    <p>compared to:</p>
+    <code>
+       <pre>trim_string = &( %{tag: &1 |> String.trim() } )</pre>
+    </code>
+    <p>What would you choose? They both do the same thing. I'd pick the one that makes the most readable one based on the structure of the encompassing function.</p>
+    <p>For now let's head back to the original code.</p>
+        <code class="code">
+            <pre>def string_to_list(attrs) do</pre>
+            <pre>  attrs</pre>
+            <pre>  |> Map.update!(:atom_of_string_that_needs_to_be_a_list, fn string -> </pre>
+            <pre>    string</pre>
+            <pre>    |> String.split(",", trim: true)</pre>
+            <pre>    |> Enum.map( &(&1 |> String.trim() ) )</pre>
+            <pre>    |> Enum.uniq()</pre>
+            <pre>    end )</pre>
+            <pre>end</pre>
+        </code>
+    <p>As someone who's only been coding for a good year. Just Looking at the block above makes so much sense. Like, behold there's no temporary variables or anything confusing. There's definitely something in the Kool-Aid.</p>
+    <p>The nicest thing about elixir is that you can really "say" what you want to do and not have to worry so much about the details. But in the end it's just another tool for the job. And as someone who use to repair cars for a living. It's always best to use the right tool for the right job. But the thoughts that José Valim and the rest of the elixir community had put into the design of the language makes it a pretty damn cool tool.</p>
+</main>
+<footer class="m-footer">
+    <hr>
+    <p><a href="/">318nkstate</a> &#169; 2021 <br> ~ Keeping it simple</p>
+</footer>
+
+</body>
+
+</html>
