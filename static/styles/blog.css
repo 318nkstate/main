@@ -3,7 +3,16 @@ body{
     word-wrap: normal;
     overflow-x: hidden;
     max-width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: #383838;
+    color: #efefef
 }
+a {
+    color: #dfcef0
+}
+
 hr{
     width: auto;
 }
@@ -18,8 +27,8 @@ hr{
 .m-main__content,
 .m-main__posts{
     min-width:50vw;
-
     max-width: 100%;
+    min-height: 100vw;
 }
 
 .m-main__content{
@@ -42,4 +51,12 @@ hr{
         width: auto;
         padding: 0 2vw;
     }
+}
+
+code {
+    color: rgb(255, 217, 217)
+}
+
+pre {
+    margin: 0.1em 0;
 }
