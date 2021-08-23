@@ -39,8 +39,8 @@
     <code class="code">
         <pre>def string_to_list(attrs) do (</pre>
         <pre>  Map.update!(attrs, :atom_of_string_that_needs_to_be_a_list, </pre>
-        <pre>    fn(string -> Enum.uniq( </pre> 
-        <pre>       Enum.map( </pre>
+        <pre>    fn(string -> Enum.uniq(string, </pre> 
+        <pre>       Enum.map(string, </pre>
         <pre>         String.trim( String.split( string, ",", trim: true) ) )</pre>
         <pre>       )</pre>
         <pre>   end)</pre>
